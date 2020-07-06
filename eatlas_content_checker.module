@@ -18,18 +18,33 @@ function eatlas_content_checker_menu() {
     'file' => 'eatlas_content_checker.admin.inc',
   );
 
+  $items['admin/config/eatlas/eatlas_content_checker/offending_style'] = array(
+    'title' => 'Content checker - find nodes containing offending CSS style',
+    'description' => 'List eAtlas nodes containing offending CSS style',
+    'page callback' => '_eatlas_content_checker_offending_style',
+    'access arguments' => array('access administration pages'),
+    'file' => 'eatlas_content_checker.admin.inc',
+  );
+
   $items['admin/config/eatlas/eatlas_content_checker/broken_links'] = array(
-    'title' => 'Content checker',
-    'description' => 'List eAtlas nodes containing broken URLs',
+    'title' => 'Content checker - find broken URLs',
+    'description' => 'Find broken URLs in eAtlas links',
     'page callback' => '_eatlas_content_checker_broken_urls_list',
     'access arguments' => array('access administration pages'),
     'file' => 'eatlas_content_checker.admin.inc',
   );
 
   $items['admin/config/eatlas/eatlas_content_checker/http_links'] = array(
-    'title' => 'Content checker',
-    'description' => 'List eAtlas nodes containing http URLs',
+    'title' => 'Content checker - find HTTP URLs',
+    'description' => 'List eAtlas nodes containing HTTP URLs',
     'page callback' => '_eatlas_content_checker_http_urls_list',
+    'access arguments' => array('access administration pages'),
+    'file' => 'eatlas_content_checker.admin.inc',
+  );
+
+  // Reverse proxy
+  $items['admin/config/eatlas/eatlas_content_checker/get_url_header'] = array(
+    'page callback' => '_eatlas_content_checker_get_url_header', // Name of the function to call
     'access arguments' => array('access administration pages'),
     'file' => 'eatlas_content_checker.admin.inc',
   );
