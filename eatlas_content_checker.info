@@ -1,0 +1,17 @@
+; $Id$
+name = eAtlas content checker
+description = Look at all nodes to find broken URL, http URLs that could be replaced with https, offending style resulted from copy/paste, etc.
+core = 7.x
+
+files[] = eatlas_content_checker.module
+
+package = eAtlas
+
+configure = admin/config/eatlas/eatlas_content_checker
+
+dependencies[] = eatlas_commons
+
+; Attributes used by the update module.
+; There fields needs to be removed if the module is migrated to Drupal.org
+version = "7.x-1.0"
+project = "eatlas_content_checker"

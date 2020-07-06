@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * Implements: hook_menu().
+ * Module configuration
+ */
+function eatlas_content_checker_menu() {
+  $items = array();
+
+  // NOTE: admin/config/eatlas is defined in "eatlas_commons"
+
+  // List nodes with issues
+  $items['admin/config/eatlas/eatlas_content_checker'] = array(
+    'title' => 'Content checker',
+    'description' => 'List eAtlas nodes which requires fixing',
+    'page callback' => '_eatlas_content_checker_overview',
+    'access arguments' => array('access administration pages'),
+    'file' => 'eatlas_content_checker.admin.inc',
+  );
+
+  $items['admin/config/eatlas/eatlas_content_checker/broken_links'] = array(
+    'title' => 'Content checker',
+    'description' => 'List eAtlas nodes containing broken URLs',
+    'page callback' => '_eatlas_content_checker_broken_urls_list',
+    'access arguments' => array('access administration pages'),
+    'file' => 'eatlas_content_checker.admin.inc',
+  );
+
+  $items['admin/config/eatlas/eatlas_content_checker/http_links'] = array(
+    'title' => 'Content checker',
+    'description' => 'List eAtlas nodes containing http URLs',
+    'page callback' => '_eatlas_content_checker_http_urls_list',
+    'access arguments' => array('access administration pages'),
+    'file' => 'eatlas_content_checker.admin.inc',
+  );
+
+  return $items;
+}
+
+?>
