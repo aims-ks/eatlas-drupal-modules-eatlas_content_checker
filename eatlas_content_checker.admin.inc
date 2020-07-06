@@ -32,7 +32,15 @@ function _eatlas_content_checker_offending_style() {
 }
 function _eatlas_content_checker_list_offending_style_nodes() {
   // List of common style that appear in the markup when doing copy/paste
-  $nids = _eatlas_content_checker_get_all_node_ids(array("line-height:", "letter-spacing:"));
+  $nids = _eatlas_content_checker_get_all_node_ids(array(
+    "line-height:",
+    "letter-spacing:",
+    "font-family:",
+    "text-decoration:",
+    "color: rgb(",
+    "clear: both",
+    "<span"
+  ));
   // Useful for testing
   $nids = array_slice($nids, 0, 50);
 
@@ -158,6 +166,8 @@ function _eatlas_content_checker_get_all_node_ids($contains_array) {
     ->fields('b', array('entity_id'))
     ->condition('b.entity_type', 'node')
     ->condition('b.deleted', 0);
+
+  // TODO Remove external links node types
 
   if ($contains_array) {
     $contains_array_length = count($contains_array);
