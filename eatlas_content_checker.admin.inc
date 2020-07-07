@@ -165,9 +165,8 @@ function _eatlas_content_checker_get_all_node_ids($contains_array) {
   $query = db_select('field_data_body', 'b')
     ->fields('b', array('entity_id'))
     ->condition('b.entity_type', 'node')
+    ->condition('b.bundle', array('external_content', 'eatlas_georss_item'), 'NOT IN')
     ->condition('b.deleted', 0);
-
-  // TODO Remove external links node types
 
   if ($contains_array) {
     $contains_array_length = count($contains_array);
