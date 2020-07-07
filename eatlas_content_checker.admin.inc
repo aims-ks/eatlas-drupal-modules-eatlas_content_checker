@@ -53,7 +53,7 @@ function _eatlas_content_checker_list_offending_style_nodes() {
 
   $nids = _eatlas_content_checker_get_all_node_ids($offending_styles);
   // Useful for testing
-  $nids = array_slice($nids, 0, 50);
+  //$nids = array_slice($nids, 0, 50);
 
   $found = array();
 
