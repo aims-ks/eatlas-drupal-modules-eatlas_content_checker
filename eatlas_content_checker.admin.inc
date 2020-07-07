@@ -44,7 +44,7 @@ function _eatlas_content_checker_list_offending_style_nodes() {
     "text-indent:",
     "orphans:",
     "color: rgb(", // CKEditor tends to add text colour encoded in rgb colour
-    "clear: both", // Float layout should be replaced with flex where possible (works better on mobile)
+    "clear: both", "clear:both", // Float layout should be replaced with flex where possible (works better on mobile)
     "<span", // Most copied content are placed in span
     "<font", // Sometime, CKEditor will use the deprecated font tag
     "<h1", // H1 should not be used in articles. That's reserved for page title
