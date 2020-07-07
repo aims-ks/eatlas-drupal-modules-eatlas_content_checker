@@ -45,10 +45,11 @@ function _eatlas_content_checker_list_offending_style_nodes() {
     "orphans:",
     "color: rgb(", // CKEditor tends to add text colour encoded in rgb colour
     "clear: both", "clear:both", // Float layout should be replaced with flex where possible (works better on mobile)
+    "float:", // If that generate too much false positive, I will remove it
     "<span", // Most copied content are placed in span
     "<font", // Sometime, CKEditor will use the deprecated font tag
     "<h1", // H1 should not be used in articles. That's reserved for page title
-    "<a>" // One article contained many empty "a" tag. Not sure if that's a common issue
+    "<a>" // Multiple articles contains empty "a" tag. Not sure what cause that issue
   );
 
   $nids = _eatlas_content_checker_get_all_node_ids($offending_styles);
