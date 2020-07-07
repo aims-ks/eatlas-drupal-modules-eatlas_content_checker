@@ -19,11 +19,12 @@ function _eatlas_content_checker_offending_style() {
 
   $offending_style_nodes = _eatlas_content_checker_list_offending_style_nodes();
 
-  $header = array(t('Nodes'));
+  $header = array(t('Nodes'), t('Offending styles'));
   $rows = array();
   foreach($offending_style_nodes as $node) {
     $rows[] = array(
       l($node->title, "node/$node->nid"),
+      _eatlas_content_checker_array_to_list($node->offending_styles)
     );
   }
   $output .= theme('table', array('header' => $header, 'rows' => $rows, 'empty' => t('No issue found.')));
@@ -32,7 +33,7 @@ function _eatlas_content_checker_offending_style() {
 }
 function _eatlas_content_checker_list_offending_style_nodes() {
   // List of common style that appear in the markup when doing copy/paste
-  $nids = _eatlas_content_checker_get_all_node_ids(array(
+  $offending_styles = array(
     "line-height:",
     "letter-spacing:",
     "word-spacing:",
@@ -48,7 +49,9 @@ function _eatlas_content_checker_list_offending_style_nodes() {
     "<font", // Sometime, CKEditor will use the deprecated font tag
     "<h1", // H1 should not be used in articles. That's reserved for page title
     "<a>" // One article contained many empty "a" tag. Not sure if that's a common issue
-  ));
+  );
+
+  $nids = _eatlas_content_checker_get_all_node_ids($offending_styles);
   // Useful for testing
   $nids = array_slice($nids, 0, 50);
 
@@ -57,9 +60,19 @@ function _eatlas_content_checker_list_offending_style_nodes() {
   foreach ($nids as $nid){
     $node = node_load($nid);
 
+    $offending_styles_found = array();
+    $body = field_get_items('node', $node, 'body');
+    $body_str = $body[0]['value'];
+    foreach($offending_styles as $offending_style) {
+      if (strpos($body_str, $offending_style) !== FALSE) {
+        array_push($offending_styles_found, $offending_style);
+      }
+    }
+
     array_push($found, (object)array(
       "nid" => $node->nid,
       "title" => $node->title,
+      "offending_styles" => $offending_styles_found
     ));
   }
 
@@ -159,6 +172,14 @@ function _eatlas_content_checker_list_http_nodes() {
 
 
 
+function _eatlas_content_checker_array_to_list($str_array) {
+  $str_list = '<ul>';
+  foreach($str_array as $str) {
+    $str_list .= '<li>' . htmlspecialchars($str) . '</li>';
+  }
+  $str_list .= '</ul>';
+  return $str_list;
+}
 function _eatlas_content_checker_url_array_to_list($url_array) {
   $url_list = '<ul>';
   foreach($url_array as $url) {
@@ -167,6 +188,7 @@ function _eatlas_content_checker_url_array_to_list($url_array) {
   $url_list .= '</ul>';
   return $url_list;
 }
+
 
 function _eatlas_content_checker_get_all_node_ids($contains_array) {
   // Return all nids of nodes of type "page".
