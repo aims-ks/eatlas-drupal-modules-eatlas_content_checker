@@ -35,11 +35,19 @@ function _eatlas_content_checker_list_offending_style_nodes() {
   $nids = _eatlas_content_checker_get_all_node_ids(array(
     "line-height:",
     "letter-spacing:",
+    "word-spacing:",
     "font-family:",
+    "font-variant:",
+    "font-style:",
     "text-decoration:",
-    "color: rgb(",
-    "clear: both",
-    "<span"
+    "text-indent:",
+    "orphans:",
+    "color: rgb(", // CKEditor tends to add text colour encoded in rgb colour
+    "clear: both", // Float layout should be replaced with flex where possible (works better on mobile)
+    "<span", // Most copied content are placed in span
+    "<font", // Sometime, CKEditor will use the deprecated font tag
+    "<h1", // H1 should not be used in articles. That's reserved for page title
+    "<a>" // One article contained many empty "a" tag. Not sure if that's a common issue
   ));
   // Useful for testing
   $nids = array_slice($nids, 0, 50);
