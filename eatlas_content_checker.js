@@ -6,7 +6,7 @@ function eatlas_content_checker_check_urls(forHttps) {
       var element = $(this);
       var url = element.text();
       if (forHttps) {
-        url.replace("http://", "https://");
+        url = url.replace("http://", "https://");
       }
 
       var proxyUrl = "/admin/config/eatlas/eatlas_content_checker/get_url_header?check-url=" + encodeURIComponent(url);
