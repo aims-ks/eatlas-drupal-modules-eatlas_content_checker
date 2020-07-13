@@ -13,7 +13,7 @@ function eatlas_content_checker_check_urls(forHttps) {
 
       $.ajax({
         "url": proxyUrl,
-        "success": function(el, url) {
+        "success": function(el, forHttps, url) {
           return function(content) {
             var contentParts = content.split("\n");
             var status = parseInt(contentParts[0]);
@@ -21,6 +21,11 @@ function eatlas_content_checker_check_urls(forHttps) {
 
             if (status < 400) {
               el.css("color", "#009900");
+              if (forHttps) {
+                if (redirectUrl && redirectUrl.startsWith("http://")) {
+                  el.css("color", "#CC6600");
+                }
+              }
             } else {
               el.css("color", "#990000");
             }
@@ -32,7 +37,7 @@ function eatlas_content_checker_check_urls(forHttps) {
             statusCodeLine += '<span class"status-code">' + status + '</span>';
             el.append(' [' + statusCodeLine + ']');
           };
-        }(element, url),
+        }(element, forHttps, url),
         "error": function() {
           console.error("ERROR occurred while sending a request to get_url_header.");
         }
